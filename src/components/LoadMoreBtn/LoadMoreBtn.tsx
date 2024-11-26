@@ -1,17 +1,27 @@
-import LoadMoreBtn from './LoadMoreBtn'; 
+import css from './LoadMoreBtn.module.css';
 
-const ParentComponent = () => {
-  const [isActive, setIsActive] = useState(true); 
+interface LoadMoreBtnProps {
+  handleMore: () => void;
+  isActive: boolean;
+}
 
-  const handleMore = () => {
-    setIsActive(false); 
+const LoadMoreBtn: React.FC<LoadMoreBtnProps> = ({ handleMore, isActive }) => {
+  const handleClick = () => {
+    if (!isActive) {
+      handleMore();
+    }
   };
 
   return (
-    <div>
-      <LoadMoreBtn handleMore={handleMore} isActive={isActive} />
-    </div>
+    <button 
+      onClick={handleClick} 
+      type='button' 
+      disabled={isActive} 
+      className={css.moreBtn}
+    >
+      Load more
+    </button>
   );
 };
 
-export default ParentComponent;
+export default LoadMoreBtn;

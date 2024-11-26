@@ -1,5 +1,6 @@
 import css from './ImageCard.module.css';
 
+
 interface ImageCardProps {
   alt_description: string;
   urls: {

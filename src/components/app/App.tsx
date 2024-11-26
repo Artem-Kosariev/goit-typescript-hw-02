@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import Modal from 'react-modal';
-
 import './App.css';
 import fetchPhotos from '../../api/Fetchphoto-api';
 
@@ -11,9 +10,8 @@ import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
 import ImageModal from '../ImageModal/ImageModal';
-import {AppState } from '../../types';
-
-
+import { AppState } from '../../types';
+import toast from 'react-hot-toast';
 
 Modal.setAppElement('#root');
 
@@ -68,6 +66,7 @@ const App: React.FC = () => {
         }));
       } catch (error) {
         setState(prevState => ({ ...prevState, isError: true }));
+        toast.error('Failed to fetch photos. Please try again later.');
       } finally {
         setState(prevState => ({ ...prevState, isLoading: false }));
       }
@@ -93,15 +92,13 @@ const App: React.FC = () => {
     setState(prevState => ({ ...prevState, modalImage: src, alt }));
   };
 
+  const isActive = state.isLoading || state.page >= state.totalPages;
+
   return (
     <div ref={imgRef}>
       <SearchBar onSubmit={handleQuery} />
       {state.gallery.length > 0 && (
-        <ImageGallery
-          gallery={state.gallery}
-          openModal={openModal}
-          upData={upData}
-        />
+        <ImageGallery gallery={state.gallery} openModal={openModal} upData={upData} />
       )}
       {state.isLoading && <Loader />}
       {state.isError && <ErrorMessage />}
@@ -111,12 +108,7 @@ const App: React.FC = () => {
       {state.gallery.length > 0 && !state.isLoading && !state.isError && state.totalPages > state.page && (
         <LoadMoreBtn handleMore={handleMore} isActive={isActive} />
       )}
-      <ImageModal
-        modalIsOpen={state.modalOpen}
-        closeModal={closeModal}
-        src={state.modalImage}
-        alt={state.alt}
-      />
+      <ImageModal modalIsOpen={state.modalOpen} closeModal={closeModal} src={state.modalImage} alt={state.alt} />
       <Toaster position='bottom-center' reverseOrder={true} />
     </div>
   );
