@@ -1,5 +1,5 @@
 import React from 'react';
-import ImageCard from '../ImageCard/ImageCard';
+import ImageCard from '../Imagecard/ImageCard';
 import css from './ImageGallery.module.css';
 import {Image} from '../../types'
 

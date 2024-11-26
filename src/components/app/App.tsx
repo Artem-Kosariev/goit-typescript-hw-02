@@ -109,7 +109,7 @@ const App: React.FC = () => {
         <p>No images found. Please try a different search.</p>
       )}
       {state.gallery.length > 0 && !state.isLoading && !state.isError && state.totalPages > state.page && (
-        <LoadMoreBtn handleMore={handleMore} />
+        <LoadMoreBtn handleMore={handleMore} isActive={isActive} />
       )}
       <ImageModal
         modalIsOpen={state.modalOpen}
@@ -117,7 +117,7 @@ const App: React.FC = () => {
         src={state.modalImage}
         alt={state.alt}
       />
-      <Toaster position='center' reverseOrder={true} />
+      <Toaster position='bottom-center' reverseOrder={true} />
     </div>
   );
 };
