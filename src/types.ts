@@ -1,4 +1,4 @@
-interface Image {
+ export interface Image {
   id: string;
   alt_description: string;
   urls: {
@@ -14,18 +14,18 @@ interface Image {
   };
 }
 
-interface ApiResponse {
+export interface ApiResponse {
   total: number;
   total_pages: number;
-  results: Photo[];
+  results: Image[];
 }
 
 
-interface FormValues {
+export interface FormValues {
   query: string;
 }
 
-interface AppState {
+export interface AppState {
   page: number;
   queryValue: string;
   gallery: Image[];
